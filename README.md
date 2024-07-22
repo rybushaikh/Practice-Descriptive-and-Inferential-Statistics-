@@ -25,8 +25,8 @@ Task 14
 Task 15
 Task 16
 Task 17
-# Conclusions
-# Bibliography
+Conclusions
+Bibliography
 # The Need for Descriptive and Inferential Statistics
 Statistics is a cornerstone of analytics. It helps us understand current and past trends, which businesses can use for future planning and learning from past mistakes. Descriptive statistics describe the features of data, while inferential statistics make generalizations about the data.
 
