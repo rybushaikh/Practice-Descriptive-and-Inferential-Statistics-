@@ -1,0 +1,326 @@
+---
+title: "Shaikh_ALY6000Project2"
+output: html_document
+date: "2023-01-23"
+---
+
+<P><BR><CENTER><FONT SIZE = 4, COLOR = "2C32C3"><B>ALY6000 Introduction to Analytics</B><BR><B>Northeastern University</B><BR>Professor: Dr. Dee Chiluiza<BR>Shaikh Rahheb<BR>Date: `r format(Sys.time(), "%d %B, %Y")`<P>Project Report </FONT></CENTER>
+
+<BR><B><U><FONT SIZE = 3, COLOR = "ae1717">Introduction:</BR></B></U>
+
+<BR><U><ul><FONT SIZE = 2, COLOR = "151514"><li>The need for Descriptive and Inferential Statistics:</BR></U></li>
+<BR>Before answering the above question I would like to put some light upon why do we use statistics in the first place? We use statistics as it is the center point of analytics. It gives us an insight of the current on going trends and past trends which can be used for example by the big business industries to make plans for the foresight and also learn from their past mistakes and can can handle it way better. <BR>Now we can answer the difference between Differential and Inferential statistics. First and foremost, Differential statistics makes use of the data presented and gives the features of a certain category or group whereas in Inferential statistics, it makes generalizations about the groups. Descriptive Statistics organises the data in a much more factual way whereas Inferential is used to make predictions. Descriptive is used when when the required result should be in a table or chart formats whereas in Inferential statistics the outcome is generally a probability. The conclusions also differ with Descriptive data show in results of the known data whereas Inferential goes above that data.([3] careerfoundry.com, 2021)</BR></BR>
+
+<BR><U><FONT SIZE = 2, COLOR = "151514"><li>The need for proper Data presentation:</BR></U></li>
+<BR>As humans we evolved mostly by using our visual systems and it has been developing since a really long time. Owing to that fact humans are mostly dependant on thier visual nervous systems more than any other sensory systems to gather information. We like learning visually making the presentatioon of data that much more important and necessary. Many people struggle with numbers when presented in the form of just tables that contains rows and columns making it difficult to read and also missing out on crucial information. To prevent these kinds of problems we must use better presentation tools which are presneted to us. Using diagrams like pie charts, box plots and histograms we can make data a much more readable and helpful method of study. The morebasic it is to read data the better it is. ([4] skillsyouneed.com, 2019) </BR>
+
+<BR><U><FONT SIZE = 2, COLOR = "151514"><li>Practical applications of R:</U>
+<BR>R can be considered as one of the best tools when it comes to handling or representing data in today's day and age. We can use this data representation tools for many applications and industries such as the 
+<BR><I>Finance Industry</I>: In Finance Industry R is widely used to visualize data for better risk management and also performance by using many of its tools like the candlestick charts and density plots.</BR>
+<BR><I>Banking Industry:</I>In the banking industry they use R programming for Mortgage Haircut Models wherein the bank can take over the supposed property in case of a loan fraud.</BR>
+<BR><I>Healthcare Industry:</I> IN the Health Industry, many institutes use R to crunch the data that is crucial for survival. R is most commonly used for doing pre-clinical studies and assessing drug-safety data in more complex processes such as drug development. It also gives its customers with a suite for undertaking exploratory data analysis as well as dynamic visualization capabilities. ([5] data-flair.training, 2019)</BR>
+</BR></BR></U></li>
+</ul>
+
+# Tasks:
+
+```{r libraries data, message=FALSE, warning=FALSE}
+# Libraries used in this document
+library(rmarkdown)
+library(readxl)
+library(readr)
+library(tidyverse)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(magrittr)
+library(kableExtra)
+library(RColorBrewer)
+```
+
+```{r}
+# Data Sets used in this document
+M2Data <- read_excel("C:/Users/Raheb/Desktop/ALY6000 Rproject/DataSets/M2Data.xlsx")
+```
+
+# Task 1 
+```{r}
+# a) Isolate first 5
+head1 = head(M2Data, 5)
+# b) Isolate last 5
+tail1 = tail(M2Data, 5)
+# c) Combining them
+HT = rbind(head1, tail1)
+# d) Present using knitr::kable()
+knitr::kable(HT)
+```
+
+<BR><B><U>Observations</B></U>: Here we can observe that by using the syntaxes head(), tail(), and rbind() we have successfully printed the first 5 the last 5 and also created an object that holds the combined values of the printed tables.</B> 
+
+# Task 2
+``` {r}
+Market = M2Data %>% count(Market)
+knitr::kable(Market)
+```
+<BR><B><U>Observations</B></U>: We successfully created a table with all the categories of Market, and their corresponding frequencies.</BR>
+
+# Task 3
+```{r warning=FALSE}
+graph1 = table(M2Data$Market)
+
+barplot(graph1)
+par(main=c(1, 1.4, 1, 1))
+plot1 = barplot(graph1,
+                main = "Market",
+                xlab = "Frequency",
+                ylab = "Continent",
+                col = c(
+                  "#d1d0d7","#c0d4d8","#afc9c6","#b0e0e6","#40e0d0"),
+                horiz = T,
+                cex.names = 0.6
+                )
+```
+<BR><B><U>Observations</B></U>: We have successfully created the required bar graph and also added colors and made the values visible. We can observe that the Markets in Asia Pacific has the biggest values wehn compared to hte rest of the continents.</BR>
+
+# Task 4
+```{r}
+t4Africa = dplyr::filter(M2Data, Market=="Africa")
+pie(table(t4Africa$Product_Category),
+    col = cm.colors(6)
+    )
+```
+<BR><B><U>Observations</B></U>: We have created an object called t$Africa which stores all the filtered information and also a pie chart that shows us that the majority of the pie chart is contained by the technology category.</BR>
+
+# Task 5
+```{r}
+# Creating Table
+t5_table = table(t4Africa$Product_SubCategory)
+
+# Barplot
+t5_bar = barplot(t5_table)
+                
+ 
+# Use a text() tp show the values
+text(y=table(t4Africa$Product_SubCategory),
+     t5_bar,
+     table(t4Africa$Product_SubCategory),
+     cex = 0.8,
+     pos = 3
+     )
+```
+<BR><B><U>Observations</B></U>: Here we can see that all the sub categories and created the barplot.</BR>
+
+# Task 6
+```{r}
+t5_table = table(t4Africa$Product_SubCategory)
+t5_bar = barplot(t5_table,
+     main = "Subcategories of the Products",                                               
+     ylab = "Frequency",
+     xlab = "",
+     col = terrain.colors(9),
+     las = 2,
+     yaxp = c(0,14,5),2)
+text(y=table(t4Africa$Product_SubCategory),
+     t5_bar,
+     table(t4Africa$Product_SubCategory),
+     cex = 0.6,
+     pos = 3)
+
+```
+<BR><B><U>Observations</B></U>: We have successfully updated the table with labels and made it better looking by adding some colors in it. </BR>
+
+# Task 7
+```{r warning=FALSE}
+mean_sales = tapply(t4Africa$Sales, t4Africa$Product_SubCategory, mean)
+dotchart(mean_sales)
+```
+<BR><B><U>Observations</B></U>: Successfully created the the required dot plot for this task for the Africa table.</BR>  
+
+# Task 8
+```{r warning=FALSE}
+Sales_Africa = tapply(t4Africa$Sales, t4Africa$Region, sum)
+par(mai = c(2.1,1,0.7,1),
+    cex = 0.7)
+barplot(Sales_Africa,
+     main = "Sale of the Products",
+     ylab = "Frequency",
+     xlab = "Continents",
+     col = heat.colors(5),
+     yaxp = c(0,225000,5),
+     las = 1,
+     pos = 0.2,
+     )
+```
+
+<BR><B><U>Observations</B></U>: Used the tapply() and sum function to get the total sales per region in the African Market where we get the data of Central Africa getting the highest number of sales when compared to other parts of the continent.</BR>
+
+# Task 9
+```{r}
+Means_Africa = tapply(t4Africa$ShippingCost, t4Africa$Region,  mean)
+par(mai = c(2,1,0.5,1),
+    cex = 0.6)
+barplot(Means_Africa,
+     main = "Mean of the Products",
+     ylab = "Frequency",
+     xlab = "Continents",
+     col = terrain.colors(5),
+     las = 1,
+     yaxp = c(0,400,5),2)
+```
+
+<BR><B><U>Observations</B></U>: Successfully got the mean shipping costs per region in the african market where we get the data that eastern africa has the most frequency of mean shipping costs when compared to  the rest of the continent. </BR>
+
+
+# Task 10
+<BR><B>Data Type designations in R</BR></B>:
+<I><BR>Numeric:</I>The most widely used and familiar data type in R is the Numeric Data type. These hold all the values that either are numbers or use the decimel system when using R which needs to be used and executed for certain function.</BR>
+<I><BR>Factor:</I>The factor is used when there is need for character or text variables when using R. Factor variables, are employed when there are a restricted amount of distinct character strings.</BR>
+<I><BR>Double:</I>R turns a number into a "double" value or a decimal type with at least two decimal places when it saves it in a variable.([2] geeksforgeeks.com, 2023)</BR>
+<I><BR>Integer:</I>This data type deals with only numbers whereas Numeric data types deals with numbers as well as a decimel, this tends to only deals with values that don't hold decimal values. ([1] statsandr.com, 2023)</BR>
+
+# Task 11
+```{r}
+par(mfcol=c(2,1),
+   mai = c(2, 1, 2, 0.4),
+   mar = c (5,4,1.6,2))
+
+# Box-Plot
+boxplot(M2Data$Profits,
+        main = "Profits",
+        xlab = "Frequency",
+     col = brewer.pal(3, "Pastel1"),
+     horizontal = T
+     )
+
+# Histogram
+hist(M2Data$Profits, 
+     breaks = 50, 
+     xlab = "Profits",
+     col = brewer.pal(10, "PuOr"),
+     las = 1,
+     yaxp = c(0,300,5),2,
+     main = "" )
+```
+<BR><B><U>Observations</B></U>: Successfully written the code provided by the Professor where we can observe that the graphs are missing some of the labels and can be made better by using some of the colors present in the Rbrewer libraries.
+
+# Task 12
+```{r}
+LATAM_Profits = dplyr::filter(M2Data, Market=="LATAM")
+t13LATAM = filter(LATAM_Profits)
+boxplot(t13LATAM$Profits,
+        main = "Boxplot of filtered LATAM data",
+        horizontal = T)
+
+hist(t13LATAM$Profits,
+     main = "Histogram of filtered LATAM data",
+     )
+
+```
+<BR><B><U>Observations</B></U>: Filtered the data for Latin America successfully and stored in a new variable or subset "t13LATAM" for using it in further tasks.
+
+# Task 13
+```{r}
+salestot_Latam = tapply(t13LATAM$Sales, t13LATAM$Region, sum)
+knitr::kable(salestot_Latam)
+```
+<BR><B><U>Observations</B></U>: Using the table generated bvefore we have successfully made the table for Latin America total sales values.
+
+# Task 14
+```{r}
+boxplot(Profits ~ Region, data=t13LATAM,
+        col = brewer.pal(9, "Spectral"))
+```
+<BR><B><U>Observations</B></U>: Successfully presented the boxplots from the filtered subset that shoes the profits in the form of boxplots and also giving it colors to make it more readable or understandable.
+
+# Task 15
+```{r}
+t15 = M2Data$Product_SubCategory%>%
+  table() %>% 
+  as.data.frame()%>%
+  rename (Frequency = Freq)%>%
+  mutate (Cumulative_fre = cumsum (Frequency),
+          Probabilty = Frequency/nrow(M2Data),
+          Cumulative_prob = cumsum (Probabilty))
+
+knitr::kable(t15,
+             digits = 2,
+             caption = "Product Categories",
+             format = "html",
+             table.attr = "style='width:40%;'",
+             align = 'c') %>%
+ kable_classic(bootstrap_options = "striped",
+              full_width = TRUE,
+              position = "center",
+              font_size = 12)
+```
+<BR><B><U>Observations</B></U>: We have created the tables with proper formatting and values.
+
+# Task 16
+```{r}
+par (mfrow =c(2,2))
+t15 = M2Data$Product_SubCategory%>%
+  table() %>% 
+  as.data.frame()%>%
+  rename (Frequency = Freq)%>%
+  mutate (Cumulative_fre = cumsum (Frequency), 
+          Probability = Frequency/nrow(M2Data),
+          Cumulative_prob = cumsum (Probability))
+
+par(cex = 0.6)
+pie(t15$Frequency,
+    main = "Frequency",
+     col = brewer.pal(9, "Oranges")
+     ,)
+
+barplot(t15$Cumulative_fre ~ t15$.,
+     main = "Cumulative Frequency",
+     ylab = "Frequency",
+     xlab = "",
+     col = brewer.pal(9, "Blues"),
+     las = 2)
+
+par(cex = 0.5)
+pie(t15$Probability,
+    main = "Probabiltiy",
+     col = brewer.pal(9, "BuPu")
+     ,)
+
+barplot(t15$Cumulative_prob ~ t15$.,
+     main = "Cumulative Probabilty",
+     ylab = "Frequency",
+     xlab = "",
+     col = brewer.pal(9, "Pastel1"),
+     las = 2)
+```
+<BR><B><U>Observations</B></U>: We created all the required pie charts and Histograms and arranged them using the par(mfrow) function in a layout that makes it better and easier to read.
+
+# Task 17
+```{r}
+Europe_tot = dplyr::filter(M2Data, Market=="Europe")
+mean_sales_eur = tapply(Europe_tot$Sales, Europe_tot$Product_SubCategory, mean)
+par(mai = c(2,1,0.5,1),
+    cex = 0.4)
+barplot(mean_sales_eur,
+     main = "Mean of the Products",
+     ylab = "Means sales",
+     xlab = "Products",
+     col = brewer.pal(11, "PuOr"),
+     las = 1,
+     yaxp = c(0,20000,5),2)
+```
+<BR><B><U>Observations</B></U>: We have filtered the data using the M2Data base for Europe and found out the mean of the Sales where we can observe that the most frequency among all the different types is chairs and the least is Supplies.
+
+<BR><B><U><FONT SIZE = 3, COLOR = "ae1717">Conclusions:</BR></B></U>
+<BR><FONT SIZE = 2, COLOR = "151514"> I really learnt alot and honestly appreciate these types of assignments where we gain hands on experiences on how to get familiar with R and all the basics of it. Also the range of difficulty was very much interesting where it was easy enough to do with a little research but also tough enough to keep in interesting all the while. Also I would like to add the implementation of html made it ever so interesting and gaining that much more confidence in using the language R henceforth.</BR>
+
+<BR><B><U><FONT SIZE = 3, COLOR = "ae1717">Bibliography:</BR></B></U>
+<BR><FONT SIZE = 2, COLOR = "151514">[1] Data types in R (no date) Stats and R. Available at: https://statsandr.com/blog/data-types-in-r/ (Accessed: January 27, 2023). </BR>
+<BR>[2] R - data types (2022) GeeksforGeeks. GeeksforGeeks. Available at: https://www.geeksforgeeks.org/r-data-types/ (Accessed: January 27, 2023). </BR>
+<BR>[3] Hillier, W. et al. (2022) Descriptive vs inferential statistics explained, CareerFoundry. Available at: https://careerfoundry.com/en/blog/data-analytics/inferential-vs-descriptive-statistics/#in-summary-whats-the-difference-between-inferential-and-descriptive-statistics (Accessed: January 27, 2023). </BR>
+<BR>[4] 2011-2023, (c) C.skillsyouneed.com (no date) Presenting data, SkillsYouNeed. Available at: https://www.skillsyouneed.com/present/presenting-data.html (Accessed: January 27, 2023). </BR>
+<BR>[5] Team, D.F. (2021) Uncover the R applications - why top companies are using R programming, DataFlair. Available at: https://data-flair.training/blogs/r-applications/ (Accessed: January 27, 2023). </BR>
+
+
+<BR><B><U><FONT SIZE = 3, COLOR = "ae1717">Appendix:
+<ul><li><FONT SIZE = 2, COLOR = "151514">This file also contains an R Markdown file with it. The name of the file is Project2_Shaikh.</BR></B></U>
+
